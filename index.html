@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Dispatch Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+<body class="d-flex flex-column">
+    <section class="d-flex w-100">
+        <!-- User Section -->
+        <div class="userSection bg-succss p-5">
+            <!-- Phone Simulation  -->
+            <div class="phone overflow-y-scroll">
+                <div class="phoneCutOut position-sticky top-0"></div>
+                <div style="color: rebeccapurple;"
+                    class="notificationBar text-black position-sticky top-0 m-0 d-flex w-100 border-bottom justify-content-between">
+                    <span class=" ps-3">9:41</span>
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-wifi"></i>
+                        <i class="bi bi-battery-full pe-3"></i>
+                    </div>
+                </div>
+
+                <!-- Phone Main Content -->
+                <div id="mainContent">
+                    <section class="text-center px-4">
+                        <img src="" alt="">
+                        <h5 class="fw-semibold">Emergency Connect</h5>
+                        <p>Immediate Help When You Need It</p>
+                    </section>
+                    <!-- Kepad Section -->
+                    <!-- <section id="keypad">
+                        <div>1</div>
+                        <div>2</div>
+                        <div>3</div>
+                        <div>4</div>
+                        <div>5</div>
+                        <div>6</div>
+                        <div>7</div>
+                        <div>8</div>
+                        <div>9</div>
+                        <div>*</div>
+                        <div>0</div>
+                        <div>#</div>
+                    </section> -->
+                    <section id="" class="bottom text-center d-flex  px-4 flex-column gap-3">
+                        <button onclick="requestEmergency()" class="btn btn-danger py-2 w-100 fw-semibold">Request
+                            Ambulance</button>
+                        <a onclick="requestEmergency()" style="cursor: pointer;" class="text-black">Or call 911
+                            directly</a>
+                    </section>
+                </div>
+
+                <!-- Emergency Form -->
+                <section id="emergencyForm" class="px-3 py-4">
+                    <!-- Form header -->
+                    <p style="font-size: 1.2em;" class="text-center mb-4 fw-semibold">Emergency Request Form
+                    </p>
+                    <!-- Full Name -->
+                    <div class="form-group d-flex flex-column gap-1 mb-3">
+                        <label for="fullname">Full Name</label>
+                        <input type="text" placeholder="John Doe" id="fullname">
+                    </div>
+                    <!-- Phone Number -->
+                    <div class="form-group d-flex flex-column gap-1 mb-3">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input type="tel" placeholder="+2348111223344" id="phoneNumber">
+                    </div>
+                    <!-- Type of Emergency -->
+                    <div class="form-group d-flex flex-column gap-1 mb-3">
+                        <label for="emergencyType">Emegency Type</label>
+                        <select name="" id="emergencyType">
+                            <option selected disabled value="0">Select emergency type</option>
+                            <option value="Medical Emergency">Medical Emergency</option>
+                            <option value="Accident">Accident</option>
+                            <option value="Cardiac Arrest">Cardiac Arrest</option>
+                            <option value="Breathing Problems">Breathing Problems</option>
+                            <option value="Severe Bleeding">Severe Bleeding</option>
+                            <option value="Burglary">Burglary</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <!-- Description of Emergency -->
+                    <div class="form-group d-flex flex-column gap-1 mb-3">
+                        <label for="description">Description</label>
+                        <textarea name="" id="description" placeholder="Describe emergency..." rows="5"></textarea>
+                        <!-- <textarea type="text" placeholder="Describe the emergency" id="description" rows="5"> -->
+                    </div>
+                    <!-- Number of Victims -->
+                    <div class="form-group d-flex flex-column gap-1 mb-3">
+                        <label for="numOfVictims">Number of Victims</label>
+                        <input type="text" value="0" id="numOfVictims">
+                    </div>
+                    <!-- Callers Location -->
+                    <div class="form-group d-flex flex-column gap-1 mb-3">
+                        <label for="location">Location</label>
+                        <input type="text" placeholder="Enter your location" id="location">
+                    </div>
+                    <!-- Error Message -->
+                    <div class="alert alert-danger mx-4 text-center fw-semibold" id="errorMsg">Fill all required
+                        inputs!!!</div>
+                    <!-- Submit Button -->
+                    <button onclick="submitForm()" style="background-color: rebeccapurple;"
+                        class="btn text-white w-100 fw-semibold py-2 mt-4">Submit Emergency
+                        Request</button>
+                </section>
+
+                <!-- After the user submits the form -->
+                <section id="afterFormSubmission" class="text-center my-5">
+                    <h4 class="pt-5 mx-3">Emergency Request Submitted Successfully</h4>
+                    <p class="alert alert-primary mx-4 my-5">Waiting for response...</p>
+                    <p class="mx-4 my-5">While waiting for rescue team, make sure you stay safe</p>
+                    <!-- <button class="btn btn-dark py-2">Send another request</button> -->
+                    <button onclick="cancelEmergencyRequest()" class="btn btn-dark py-2 w-75">Cancel</button>
+                </section>
+
+                <section id="submissionResponse" class="text-center my-5"></section>
+
+                <!-- User Waiting For Response -->
+                <section id="userWaitingForResponse" class="my-5 text-center"></section>
+
+                <!-- Phone home tab styling -->
+                <div style="backdrop-filter: blur(4px);" class=" py-3 position-sticky bottom-0"></div>
+                <div style="padding: 2px; margin: 10px 80px; bottom: 15px; background-color: rebeccapurple;"
+                    class="bg-black position-sticky"></div>
+            </div>
+        </div>
+
+        <!-- Control room -->
+        <div class="controlRoom p-4 m-5 rounded-4 w-100">
+            <!-- Control room heading -->
+            <section class="d-flex justify-content-between">
+                <div class="d-flex flex-column">
+                    <h3>Emergency Control Room</h3>
+                    <p>Real-time Emergency Management</p>
+                </div>
+                <!-- Coming back to this -->
+                <div class="d-flex justify-content-between gap-3 mb-5">
+                    <div style="width: 160px; background-color: rgba(128, 128, 128, 0.3);" class="p-5 rounded-2"></div>
+                    <div style="width: 160px; background-color: rgba(128, 128, 128, 0.3);" class="p-5 rounded-2"></div>
+                </div>
+            </section>
+
+            <!-- Main part of the control room -->
+            <div style="background: rgba(128, 128, 128, 0.1); border: 2px dashed gray ; height: 400px;"
+                class="text-center mt-3 py-5 rounded-3 d-flex flex-column justify-content-center gap-1">
+
+                <!-- Initial Control Room -->
+                <div id="initialControlRoom" class="">
+                    <svg class="mx-auto mb-3 " xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                        viewBox="0 0 24 24">
+                        <g fill="none" stroke="#80808088" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2">
+                            <path
+                                d="M10 10H6m8 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2m14 0h2a1 1 0 0 0 1-1v-3.28a1 1 0 0 0-.684-.948l-1.923-.641a1 1 0 0 1-.578-.502l-1.539-3.076A1 1 0 0 0 16.382 8H14M8 8v4m1 6h6" />
+                            <circle cx="17" cy="18" r="2" />
+                            <circle cx="7" cy="18" r="2" />
+                        </g>
+                    </svg>
+                    <h6>No Active Emergency Request</h6>
+                    <p>New emergencies will appear here in real time</p>
+                </div>
+
+                <!-- Emergency Alert -->
+                <div id="emergencyAlert">
+                    <div class=" mx-5 bg-white rounded-2 border py-3 px-4  w-50 mx-auto">
+                        <div id="firstEmergencyDisplay">
+                            <h5 id="emergencyText" class="fs-4 my-4 ">Emergency Alert!!!</h5>
+                            <div class="d-flex gap-4 my-4">
+                                <button onclick="sendForm()"
+                                    class="btn btn-success w-100 py-2 fw-semibold">Answer</button>
+                                <button onclick="rejectEmergency()"
+                                    class="btn btn-danger w-100 py-2 fw-semibold">Reject</button>
+                            </div>
+                        </div>
+                        <div id="waitForUser" class="text-center">
+                            <h4>Emergency Form Sent</h4>
+                            <p>Wait while the caller fills and submit it</p>
+                        </div>
+                        <div id="displayCallerDetails" class=" flex-column gap-2">
+                            <h5 class="mb-4">Caller's Emergency Information</h5>
+                            <div>
+                                <h6>Full Name</h6>
+                                <p id="name"></p>
+                            </div>
+                            <div>
+                                <h6>Phone Number</h6>
+                                <p id="number"></p>
+                            </div>
+                            <div>
+                                <h6>Emergency Type</h6>
+                                <p id="emerType"></p>
+                            </div>
+                            <div>
+                                <h6>Description</h6>
+                                <p id="descript"></p>
+                            </div>
+                            <div>
+                                <h6>Number Of Victims</h6>
+                                <p id="victNum"></p>
+                            </div>
+                            <div>
+                                <h6>Location</h6>
+                                <p id="loct"></p>
+                            </div>
+                            <div class="gap-3 mt-3">
+                                <button onclick="check(1)" value="Approved" class="btn btn-success w-100">Approve</button>
+                                <button onclick="check(2)" value="Pending" class="btn btn-secondary w-100">Pend</button>
+                                <button onclick="check(3)" value="Rejected" class="btn btn-danger w-100">Reject</button>
+                            </div>
+                        </div>
+                        <div id="formStatus" class="text-center "></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Record Section -->
+    <section class="table-section m-5">
+        <div onclick="showTable()" style="cursor: pointer;" class="d-flex align-items-center justify-content-center gap-2 w-100">
+            <p id="tableIcon0" class="text-center">▲</p>
+            <p id="tableIcon1" class="text-center">▼</p>
+            <p id="emergencyBtn" class=" border-0 bg-white b-2">Emergency Records</p>
+        </div>
+        <table class="table table-striped" id="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Phone Number</th>
+                    <th>Emergency Type</th>
+                    <th>Description</th>
+                    <th>Number of Victims</th>
+                    <th>Location</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+
+            </tbody>
+        </table>
+    </section>
+</body>
+<script src="script.js"></script>
+
+</html>
